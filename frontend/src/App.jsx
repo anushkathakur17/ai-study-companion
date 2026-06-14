@@ -1,24 +1,7 @@
-import { useEffect, useState } from "react";
-import api from "./services/api";
+import AppRoutes from "./routes/AppRoutes";
 
 function App() {
-  const [message, setMessage] = useState("");
-
-  useEffect(() => {
-    api.get("/")
-      .then((res) => {
-        setMessage(res.data.message);
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-  }, []);
-
-  return (
-    <div>
-      <h1>{message}</h1>
-    </div>
-  );
+  return <AppRoutes />;
 }
 
 export default App;
