@@ -1,7 +1,11 @@
 import { useState } from "react";
 import api from "../services/api";
 
+import { useNavigate } from "react-router-dom";
+
 function Login() {
+
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     email: "",
@@ -31,7 +35,7 @@ function Login() {
         res.data.access_token
       );
 
-      alert("Login Successful");
+      navigate("/dashboard");
 
     } catch (err) {
 
