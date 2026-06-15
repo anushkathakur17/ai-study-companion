@@ -1,3 +1,4 @@
+import Navbar from "../components/Navbar";
 import { useNavigate } from "react-router-dom";
 
 function Dashboard() {
@@ -12,15 +13,23 @@ function Dashboard() {
   };
 
   return (
+
     <div>
 
+      <Navbar />
+
       <h1>Dashboard</h1>
+
+      <h3>My Notes</h3>
+
+      <p>No notes uploaded yet</p>
 
       <button onClick={handleLogout}>
         Logout
       </button>
 
     </div>
+
   );
 }
 

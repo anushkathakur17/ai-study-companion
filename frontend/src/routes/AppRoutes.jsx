@@ -6,6 +6,8 @@ import Dashboard from "../pages/Dashboard";
 
 import ProtectedRoute from "../components/ProtectedRoute";
 
+import UploadNotes from "../pages/UploadNotes";
+
 function AppRoutes() {
 
   return (
@@ -30,6 +32,15 @@ function AppRoutes() {
           </ProtectedRoute>
         }
       />
+
+      <Route
+        path="/upload"
+        element={
+          <ProtectedRoute>
+            <UploadNotes />
+          </ProtectedRoute>
+        }
+/>
 
     </Routes>
 
