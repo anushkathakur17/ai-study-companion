@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.routes.users import router as user_router
+from app.routes.notes import router as notes_router
 
 from app.database import engine, Base
 from app.models import User
@@ -25,6 +26,11 @@ app.add_middleware(
 app.include_router(
     user_router,
     prefix="/users"
+)
+
+app.include_router(
+    notes_router,
+    prefix="/notes"
 )
 
 @app.get("/")
