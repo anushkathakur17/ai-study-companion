@@ -9,3 +9,10 @@ class UserCreate(BaseModel):
 class UserLogin(BaseModel):
     email: str
     password: str
+
+class NoteResponse(BaseModel):
+    id: int
+    title: str
+    content: str
+    class Config:
+        from_attributes = True
