@@ -5,6 +5,10 @@ from pypdf import PdfReader
 from app.database import SessionLocal
 from app.models import Note
 
+from app.services.rag_service import retrieve_chunks
+
+from app.services.gemini_service import generate_answer
+
 router = APIRouter()
 
 
@@ -54,3 +58,23 @@ def get_notes(db: Session = Depends(get_db)):
     notes = db.query(Note).order_by(Note.id.desc()).all()
 
     return notes
+
+@router.get("/ask")
+def ask_ai(
+    question: str
+):
+
+    chunks = retrieve_chunks(
+        question
+    )
+
+    answer = generate_answer(
+        question,
+        chunks
+    )
+
+    return {
+
+        "answer": answer
+
+    }

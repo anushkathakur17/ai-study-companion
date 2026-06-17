@@ -1,12 +1,19 @@
 # Python
 backend/venv/
-
-# React
-frontend/node_modules/
+backend/__pycache__/
+*.pyc
 
 # Environment variables
-.env
+backend/.env
 
-# Cache
-__pycache__/
-*.pyc
+# ChromaDB storage
+backend/chroma_db/
+
+# Frontend
+frontend/node_modules/
+
+# Vite build files
+frontend/dist/
+
+# VS Code settings (optional)
+.vscode/
