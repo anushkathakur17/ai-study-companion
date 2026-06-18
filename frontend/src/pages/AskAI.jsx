@@ -1,6 +1,7 @@
 import { useState } from "react";
 
 import api from "../services/api";
+
 import Navbar from "../components/Navbar";
 
 function AskAI() {
@@ -22,6 +23,8 @@ function AskAI() {
     }
 
     setLoading(true);
+
+    setAnswer("");
 
     try {
 
@@ -53,7 +56,11 @@ function AskAI() {
 
       console.log(err);
 
-      alert("Something went wrong");
+      alert(
+
+        "Something went wrong"
+
+      );
 
     }
 
@@ -63,85 +70,95 @@ function AskAI() {
 
   return (
 
-    <div>
+    <div className="page">
 
       <Navbar />
 
-      <h1>Ask AI</h1>
+      <div className="card">
 
-      <textarea
+        <h1>
 
-        rows="4"
+          Ask AI
 
-        cols="60"
+        </h1>
 
-        placeholder="Ask a question..."
+        <textarea
 
-        value={question}
+          rows="4"
 
-        onChange={(e)=>
+          placeholder="Ask a question from your uploaded study material..."
 
-          setQuestion(
+          value={question}
 
-            e.target.value
+          onChange={(e)=>
+
+            setQuestion(
+
+              e.target.value
+
+            )
+
+          }
+
+        />
+
+        <br /><br />
+
+        <button
+
+          onClick={handleAsk}
+
+          disabled={loading}
+
+        >
+
+          {
+
+            loading
+
+            ?
+
+            "Thinking..."
+
+            :
+
+            "Ask"
+
+          }
+
+        </button>
+
+        <br /><br />
+
+        {
+
+          answer
+
+          &&
+
+          (
+
+            <div>
+
+              <h3>
+
+                Answer
+
+              </h3>
+
+              <p>
+
+                {answer}
+
+              </p>
+
+            </div>
 
           )
 
         }
 
-      />
-
-      <br /><br />
-
-      <button
-
-        onClick={handleAsk}
-
-        disabled={loading}
-
-      >
-
-        {
-
-          loading
-
-          ?
-
-          "Thinking..."
-
-          :
-
-          "Ask"
-
-        }
-
-      </button>
-
-      <br /><br />
-
-      {
-
-        answer
-
-        &&
-
-        (
-
-          <div>
-
-            <h3>Answer</h3>
-
-            <p>
-
-              {answer}
-
-            </p>
-
-          </div>
-
-        )
-
-      }
+      </div>
 
     </div>
 

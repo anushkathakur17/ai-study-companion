@@ -12,6 +12,8 @@ function Quiz() {
 
   const [quiz, setQuiz] = useState("");
 
+  const [loading, setLoading] = useState(false);
+
   useEffect(() => {
 
     fetchNotes();
@@ -34,7 +36,9 @@ function Quiz() {
 
     catch (err) {
 
-      console.log(err);
+      console.log(
+        err
+      );
 
     }
 
@@ -44,11 +48,21 @@ function Quiz() {
 
     if (!selectedNote) {
 
-      alert("Please select a PDF");
+      alert(
+        "Please select a PDF"
+      );
 
       return;
 
     }
+
+    setLoading(
+      true
+    );
+
+    setQuiz(
+      ""
+    );
 
     try {
 
@@ -69,14 +83,18 @@ function Quiz() {
       );
 
       setQuiz(
+
         res.data.quiz
+
       );
 
     }
 
     catch (err) {
 
-      console.log(err);
+      console.log(
+        err
+      );
 
       alert(
         "Quiz generation failed"
@@ -84,87 +102,131 @@ function Quiz() {
 
     }
 
+    setLoading(
+      false
+    );
+
   };
 
   return (
 
-    <div>
+    <div className="page">
 
       <Navbar />
 
-      <h1>
+      <div className="card">
 
-        Quiz Generator
+        <h1>
 
-      </h1>
+          Quiz Generator
 
-      <select
+        </h1>
 
-        value={selectedNote}
+        <select
 
-        onChange={(e)=>
+          value={selectedNote}
 
-          setSelectedNote(
+          onChange={(e)=>
 
-            e.target.value
+            setSelectedNote(
 
-          )
-
-        }
-
-      >
-
-        <option value="">
-
-          Select PDF
-
-        </option>
-
-        {
-
-          notes.map(
-
-            (note)=>(
-
-              <option
-
-                key={note.id}
-
-                value={note.id}
-
-              >
-
-                {note.title}
-
-              </option>
+              e.target.value
 
             )
 
+          }
+
+        >
+
+          <option value="">
+
+            Select PDF
+
+          </option>
+
+          {
+
+            notes.map(
+
+              (note)=>(
+
+                <option
+
+                  key={note.id}
+
+                  value={note.id}
+
+                >
+
+                  {note.title}
+
+                </option>
+
+              )
+
+            )
+
+          }
+
+        </select>
+
+        <br /><br />
+
+        <button
+
+          onClick={handleGenerate}
+
+          disabled={loading}
+
+        >
+
+          {
+
+            loading
+
+            ?
+
+            "Generating..."
+
+            :
+
+            "Generate Quiz"
+
+          }
+
+        </button>
+
+        <br /><br />
+
+        {
+
+          quiz
+
+          &&
+
+          (
+
+            <div>
+
+              <h3>
+
+                Generated Quiz
+
+              </h3>
+
+              <pre>
+
+                {quiz}
+
+              </pre>
+
+            </div>
+
           )
 
         }
 
-      </select>
-
-      <br /><br />
-
-      <button
-
-        onClick={handleGenerate}
-
-      >
-
-        Generate Quiz
-
-      </button>
-
-      <br /><br />
-
-      <pre>
-
-        {quiz}
-
-      </pre>
+      </div>
 
     </div>
 

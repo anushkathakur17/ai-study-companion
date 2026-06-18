@@ -1,9 +1,11 @@
 import { useState } from "react";
+
 import api from "../services/api";
 
 import Navbar from "../components/Navbar";
 
 function UploadNotes() {
+
   const [file, setFile] = useState(null);
 
   const [text, setText] = useState("");
@@ -11,92 +13,195 @@ function UploadNotes() {
   const [message, setMessage] = useState("");
 
   const handleUpload = async () => {
+
     if (!file) {
-      alert("Please select a PDF first");
+
+      alert(
+
+        "Please select a PDF first"
+
+      );
+
       return;
+
     }
 
     const formData = new FormData();
 
-    formData.append("file", file);
+    formData.append(
+
+      "file",
+
+      file
+
+    );
 
     try {
+
       const res = await api.post(
+
         "/notes/upload",
+
         formData
+
       );
 
       setMessage(
+
         res.data.message
+
       );
 
-      setText(res.data.text);
+      setText(
 
-    } catch (err) {
-      console.log(err);
+        res.data.text
 
-      alert("Upload failed");
+      );
+
     }
+
+    catch (err) {
+
+      console.log(
+
+        err
+
+      );
+
+      alert(
+
+        "Upload failed"
+
+      );
+
+    }
+
   };
 
   return (
-    <div>
+
+    <div className="page">
 
       <Navbar />
 
-      <h1>Upload Notes</h1>
+      <div className="card">
 
-      <input
-        type="file"
-        accept=".pdf"
-        onChange={(e) => {
-          setFile(e.target.files[0]);
-        }}
-      />
+        <h1>
 
-      <br /><br />
+          Upload Notes
 
-      {file && (
-        <p>
-          Selected: {file.name}
-        </p>
-      )}
+        </h1>
 
-      <button onClick={handleUpload}>
-        Upload
-      </button>
+        <input
 
-      <br /><br />
+          type="file"
 
-      {message && (
+          accept=".pdf"
 
-        <p>
+          onChange={(e)=>
 
-           {message}
+            setFile(
 
-        </p>
+              e.target.files[0]
 
-       )}
+            )
 
-       <br />
+          }
 
-      {text && (
-        <div>
+        />
 
-          <h3>Extracted Notes</h3>
+        <br /><br />
 
-          <textarea
-            rows="15"
-            cols="80"
-            value={text}
-            readOnly
-          />
+        {
 
-        </div>
-      )}
+          file
+
+          &&
+
+          (
+
+            <p>
+
+              Selected:
+
+              {" "}
+
+              {file.name}
+
+            </p>
+
+          )
+
+        }
+
+        <button
+
+          onClick={handleUpload}
+
+        >
+
+          Upload
+
+        </button>
+
+        <br /><br />
+
+        {
+
+          message
+
+          &&
+
+          (
+
+            <p className="success">
+
+              {message}
+
+            </p>
+
+          )
+
+        }
+
+        {
+
+          text
+
+          &&
+
+          (
+
+            <div>
+
+              <h3>
+
+                Extracted Notes
+
+              </h3>
+
+              <textarea
+
+                rows="15"
+
+                value={text}
+
+                readOnly
+
+              />
+
+            </div>
+
+          )
+
+        }
+
+      </div>
 
     </div>
+
   );
+
 }
 
 export default UploadNotes;

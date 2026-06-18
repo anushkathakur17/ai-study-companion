@@ -12,6 +12,8 @@ function Flashcards() {
 
   const [cards, setCards] = useState("");
 
+  const [loading, setLoading] = useState(false);
+
   useEffect(() => {
 
     fetchNotes();
@@ -34,7 +36,9 @@ function Flashcards() {
 
     catch (err) {
 
-      console.log(err);
+      console.log(
+        err
+      );
 
     }
 
@@ -44,11 +48,21 @@ function Flashcards() {
 
     if (!selectedNote) {
 
-      alert("Please select a PDF");
+      alert(
+        "Please select a PDF"
+      );
 
       return;
 
     }
+
+    setLoading(
+      true
+    );
+
+    setCards(
+      ""
+    );
 
     try {
 
@@ -69,14 +83,18 @@ function Flashcards() {
       );
 
       setCards(
+
         res.data.flashcards
+
       );
 
     }
 
     catch (err) {
 
-      console.log(err);
+      console.log(
+        err
+      );
 
       alert(
         "Generation failed"
@@ -84,92 +102,135 @@ function Flashcards() {
 
     }
 
+    setLoading(
+      false
+    );
+
   };
 
   return (
 
-    <div>
+    <div className="page">
 
       <Navbar />
 
-      <h1>
+      <div className="card">
 
-        Flashcards
+        <h1>
 
-      </h1>
+          Flashcards
 
-      <select
+        </h1>
 
-        value={selectedNote}
+        <select
 
-        onChange={(e)=>
+          value={selectedNote}
 
-          setSelectedNote(
+          onChange={(e)=>
 
-            e.target.value
+            setSelectedNote(
 
-          )
-
-        }
-
-      >
-
-        <option value="">
-
-          Select PDF
-
-        </option>
-
-        {
-
-          notes.map(
-
-            (note)=>(
-
-              <option
-
-                key={note.id}
-
-                value={note.id}
-
-              >
-
-                {note.title}
-
-              </option>
+              e.target.value
 
             )
 
+          }
+
+        >
+
+          <option value="">
+
+            Select PDF
+
+          </option>
+
+          {
+
+            notes.map(
+
+              (note)=>(
+
+                <option
+
+                  key={note.id}
+
+                  value={note.id}
+
+                >
+
+                  {note.title}
+
+                </option>
+
+              )
+
+            )
+
+          }
+
+        </select>
+
+        <br /><br />
+
+        <button
+
+          onClick={handleGenerate}
+
+          disabled={loading}
+
+        >
+
+          {
+
+            loading
+
+            ?
+
+            "Generating..."
+
+            :
+
+            "Generate Flashcards"
+
+          }
+
+        </button>
+
+        <br /><br />
+
+        {
+
+          cards
+
+          &&
+
+          (
+
+            <div>
+
+              <h3>
+
+                Generated Flashcards
+
+              </h3>
+
+              <pre>
+
+                {cards}
+
+              </pre>
+
+            </div>
+
           )
 
         }
 
-      </select>
-
-      <br /><br />
-
-      <button
-
-        onClick={handleGenerate}
-
-      >
-
-        Generate Flashcards
-
-      </button>
-
-      <br /><br />
-
-      <pre>
-
-        {cards}
-
-      </pre>
+      </div>
 
     </div>
 
   );
 
 }
-
 export default Flashcards;

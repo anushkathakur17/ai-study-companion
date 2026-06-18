@@ -4,45 +4,47 @@ function Navbar() {
 
   return (
 
-    <nav>
+    <nav className="navbar">
 
-      <Link to="/dashboard">
+      <h2>
 
-        Dashboard
+        AI Study Companion
 
-      </Link>
+      </h2>
 
-      {" | "}
+      <div>
 
-      <Link to="/upload">
+        <Link to="/dashboard">
 
-        Upload Notes
+          Dashboard
 
-      </Link>
+        </Link>
 
-      {" | "}
+        <Link to="/upload">
 
-      <Link to="/ask">
+          Upload
 
-        Ask AI
+        </Link>
 
-      </Link>
+        <Link to="/ask">
 
-      {" | "}
+          Ask AI
 
-      <Link to="/flashcards">
+        </Link>
 
-      Flashcards
+        <Link to="/flashcards">
 
-      </Link>
+          Flashcards
 
-      {" | "}
+        </Link>
 
-      <Link to="/quiz">
+        <Link to="/quiz">
 
-      Quiz
+          Quiz
 
-      </Link>
+        </Link>
+
+      </div>
 
     </nav>
 
