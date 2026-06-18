@@ -15,19 +15,45 @@ collection = client.get_or_create_collection(
 
 def chunk_text(
     text,
-    chunk_size=500
+    chunk_size=700
 ):
+
+    paragraphs = text.split("\n")
 
     chunks = []
 
-    for i in range(
-        0,
-        len(text),
-        chunk_size
-    ):
+    current_chunk = ""
+
+    for paragraph in paragraphs:
+
+        if len(
+
+            current_chunk
+
+        ) + len(
+
+            paragraph
+
+        ) < chunk_size:
+
+            current_chunk += paragraph + "\n"
+
+        else:
+
+            chunks.append(
+
+                current_chunk
+
+            )
+
+            current_chunk = paragraph
+
+    if current_chunk:
 
         chunks.append(
-            text[i:i+chunk_size]
+
+            current_chunk
+
         )
 
     return chunks

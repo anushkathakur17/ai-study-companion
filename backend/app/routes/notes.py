@@ -5,9 +5,14 @@ from pypdf import PdfReader
 from app.database import SessionLocal
 from app.models import Note
 
-from app.services.rag_service import retrieve_chunks
+from app.services.rag_service import (
+    retrieve_chunks,
+    store_note_in_rag
+)
 
-from app.services.gemini_service import generate_answer
+from app.services.gemini_service import (
+    generate_answer
+)
 
 router = APIRouter()
 
@@ -47,9 +52,15 @@ async def upload_note(
     db.commit()
     db.refresh(note)
 
+    store_note_in_rag(
+        note.id,
+        extracted_text
+    )
+
     return {
         "message": "Note saved successfully",
-        "note_id": note.id
+        "note_id": note.id,
+        "text": extracted_text
     }
 
 @router.get("/")
@@ -61,8 +72,15 @@ def get_notes(db: Session = Depends(get_db)):
 
 @router.get("/ask")
 def ask_ai(
-    question: str
+    question: str,
+    db: Session = Depends(get_db)
 ):
+
+    if not question.strip():
+
+        return {
+            "answer": "Please ask a question."
+        }
 
     chunks = retrieve_chunks(
         question
@@ -74,7 +92,5 @@ def ask_ai(
     )
 
     return {
-
         "answer": answer
-
     }

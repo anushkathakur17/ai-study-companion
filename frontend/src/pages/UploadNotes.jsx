@@ -1,10 +1,14 @@
 import { useState } from "react";
 import api from "../services/api";
 
+import Navbar from "../components/Navbar";
+
 function UploadNotes() {
   const [file, setFile] = useState(null);
 
   const [text, setText] = useState("");
+
+  const [message, setMessage] = useState("");
 
   const handleUpload = async () => {
     if (!file) {
@@ -22,6 +26,10 @@ function UploadNotes() {
         formData
       );
 
+      setMessage(
+        res.data.message
+      );
+
       setText(res.data.text);
 
     } catch (err) {
@@ -33,6 +41,8 @@ function UploadNotes() {
 
   return (
     <div>
+
+      <Navbar />
 
       <h1>Upload Notes</h1>
 
@@ -57,6 +67,18 @@ function UploadNotes() {
       </button>
 
       <br /><br />
+
+      {message && (
+
+        <p>
+
+           {message}
+
+        </p>
+
+       )}
+
+       <br />
 
       {text && (
         <div>

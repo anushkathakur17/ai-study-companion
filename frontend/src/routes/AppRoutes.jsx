@@ -8,6 +8,8 @@ import ProtectedRoute from "../components/ProtectedRoute";
 
 import UploadNotes from "../pages/UploadNotes";
 
+import AskAI from "../pages/AskAI";
+
 function AppRoutes() {
 
   return (
@@ -40,7 +42,16 @@ function AppRoutes() {
             <UploadNotes />
           </ProtectedRoute>
         }
-/>
+    />
+      <Route
+        path="/ask"
+        element={
+          <ProtectedRoute>
+            <AskAI />
+          </ProtectedRoute>
+        }
+    />
+
 
     </Routes>
 
