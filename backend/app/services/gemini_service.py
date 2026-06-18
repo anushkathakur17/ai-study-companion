@@ -54,3 +54,70 @@ Question:
     )
 
     return response.text
+
+def generate_flashcards(
+    chunks
+):
+
+    context = "\n\n".join(
+        chunks
+    )
+
+    prompt = f"""
+Generate 5 flashcards.
+
+Format:
+
+Q:
+A:
+
+Use only the notes.
+
+Notes:
+
+{context}
+"""
+
+    response = model.generate_content(
+        prompt
+    )
+
+    return response.text
+
+def generate_quiz(
+    chunks
+):
+
+    context = "\n\n".join(
+        chunks
+    )
+
+    prompt = f"""
+Generate 5 MCQs.
+
+Each question must have:
+
+Question
+
+A)
+
+B)
+
+C)
+
+D)
+
+Correct Answer
+
+Use only the notes.
+
+Notes:
+
+{context}
+"""
+
+    response = model.generate_content(
+        prompt
+    )
+
+    return response.text

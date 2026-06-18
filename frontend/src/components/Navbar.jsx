@@ -28,6 +28,22 @@ function Navbar() {
 
       </Link>
 
+      {" | "}
+
+      <Link to="/flashcards">
+
+      Flashcards
+
+      </Link>
+
+      {" | "}
+
+      <Link to="/quiz">
+
+      Quiz
+
+      </Link>
+
     </nav>
 
   );

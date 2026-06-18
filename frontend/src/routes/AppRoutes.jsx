@@ -9,6 +9,8 @@ import ProtectedRoute from "../components/ProtectedRoute";
 import UploadNotes from "../pages/UploadNotes";
 
 import AskAI from "../pages/AskAI";
+import Flashcards from "../pages/Flashcards";
+import Quiz from "../pages/Quiz";
 
 function AppRoutes() {
 
@@ -51,7 +53,23 @@ function AppRoutes() {
           </ProtectedRoute>
         }
     />
+      <Route
+        path="/flashcards"
+        element={
+          <ProtectedRoute>
+          <Flashcards />
+          </ProtectedRoute>
+        }
+    />
 
+      <Route
+        path="/quiz"
+        element={
+          <ProtectedRoute>
+          <Quiz />
+          </ProtectedRoute>
+        }
+    />
 
     </Routes>
 

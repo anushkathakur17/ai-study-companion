@@ -11,7 +11,9 @@ from app.services.rag_service import (
 )
 
 from app.services.gemini_service import (
-    generate_answer
+    generate_answer,
+    generate_flashcards,
+    generate_quiz
 )
 
 router = APIRouter()
@@ -94,3 +96,77 @@ def ask_ai(
     return {
         "answer": answer
     }
+
+@router.get("/flashcards")
+def flashcards(
+
+    note_id: int,
+
+    db: Session = Depends(get_db)
+
+):
+
+    note = db.get(
+
+        Note,
+
+        note_id
+
+    )
+
+    cards = generate_flashcards(
+
+        [note.content]
+
+    )
+
+    return {
+
+        "flashcards": cards
+
+    }
+@router.get("/quiz")
+def quiz(
+
+    note_id: int,
+
+    db: Session = Depends(get_db)
+
+):
+
+    note = db.get(
+
+        Note,
+
+        note_id
+
+    )
+
+    quiz = generate_quiz(
+
+        [note.content]
+
+    )
+
+    return {
+
+        "quiz": quiz
+
+    }
+@router.get("/list")
+def list_notes(
+    db: Session = Depends(get_db)
+):
+
+    notes = db.query(Note).all()
+
+    return [
+
+        {
+            "id": note.id,
+            "title": note.title
+        }
+
+        for note in notes
+
+    ]
