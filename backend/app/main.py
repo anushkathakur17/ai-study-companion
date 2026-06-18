@@ -5,9 +5,22 @@ from app.routes.users import router as user_router
 from app.routes.notes import router as notes_router
 
 from app.database import engine, Base
-from app.models import User
+from app.models import User, Note
+
+from slowapi import Limiter
+from slowapi.util import get_remote_address
+from slowapi.errors import RateLimitExceeded
+from slowapi.middleware import SlowAPIMiddleware
 
 app = FastAPI()
+
+limiter = Limiter(
+    key_func=get_remote_address
+)
+app.state.limiter = limiter
+app.add_middleware(
+    SlowAPIMiddleware
+)
 
 Base.metadata.create_all(bind=engine)
 
