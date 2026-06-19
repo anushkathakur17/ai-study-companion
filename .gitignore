@@ -17,3 +17,6 @@ frontend/dist/
 
 # VS Code settings (optional)
 .vscode/
+
+# Frontend environment variables
+frontend/.env
